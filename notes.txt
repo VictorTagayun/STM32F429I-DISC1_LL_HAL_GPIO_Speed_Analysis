@@ -1,0 +1,25 @@
+Project  : STM32F429I-DISC1_LL_HAL_GPIO_Speed_with_1uS_Delay
+Purpose  : Determine how fast is the IO toggling
+Strategy : Max the Clock/RCC to 180Mhz and use Register level
+
+** RCC **
+8Mhz (HSE) -> /4(M) -> X180(N) -> /2(P) -> PLLCLOCK = 180Mhz
+
+** GPIO **
+	  GPIOG->BSRR = (1<<13); // SET
+	  GPIOG->BSRR = (1<<29); // RESET
+	  
+** Delay **
+	  // approx 0 = 83nS, 1 = 184nS, 2 = 250nS, 3 = 317nS, 4 = 384nS, 5 = 450nS
+	  // 6 = 517nS >>> nS_100 < number 0-6
+	  for(uint16_t nS_100 = 0; nS_100 < 6; nS_100++) // (1) (150 - 34n)S; (2) (217 - 34)nS; (3) (284 - 34)nS
+		  {}
+
+	  // 1.018uS
+	  for(uint16_t nS_100 = 0; nS_100 < 1; nS_100++) // (1) (150 - 34n)S; (2) (217 - 34)nS; (3) (284 - 34)nS
+		  {}
+	  for(uint16_t uS = 0; uS < 1; uS++)
+	  {
+		  for(uint16_t i = 0; i < 10; i++)
+		  {}
+	  }
